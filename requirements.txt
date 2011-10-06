@@ -1,0 +1,26 @@
+Design document for the Simple quiz maker.
+
+Will be designed on WAMP
+Will provide automated quiz making via:
+- Input is a named directory of numbered images
+- Takes the count and makes a random ordering
+- Presents a menu item for new users to click to begin the named quiz
+
+Will allow administration as far as:
+- Ease of install.
+- Tagging numbered images, such as control, adjusted, or distration.
+- Password protected page...?
+
+Will allow user registration as far as:
+- A start page that allows user to input age and sex
+
+Will provide quiz taking as far as:
+- user indicates age and gender and begins survey
+- answers to incomplete surveys are captured, survey completeness is immaterial.
+
+It is not intended for a user to stop the test and start it later.
+
+Pages
+admin
+start
+install
