@@ -1,9 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<?php
+session_start();
+$_SESSION['state']='start';
+?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
 <title>Survey Start Page</title>
 </head>
 <body>
+Session state is <?php echo $_SESSION['state']?>
 <div id="banner">
 A Banner
 </div>
