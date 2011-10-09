@@ -1,21 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-<title>Survey Start Page</title>
-</head>
-<body>
-<div id="banner">
-A Banner
-</div>
-<div id="instructions">
-Fill out the form below
-</div>
-<div id="login">
-<p> Results of the form</p>
+
 <?php
-echo 'The age is ' . $_POST['age'] . ' and the gender is ' . $_POST['gender'];
+
+	#check for session state
+	#if state is blank redirect to index
+	
+	#if state is start
+		#check for submission of age and gender
+			#if true 
+			     #submit to database
+			     #fetch last id
+			     #set session user id
+			     #initialize survey numbering stack/list/array
+			     #set state to number of first quiz
+			     #redirect here
+			#else redirect to index
+
+	#if state is a number
+		#display image survey form using state number
+
+
+	#submit to this form?
+
+
 ?>
-</form>
-</div>
-</body>
-</html>
