@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `surveys` (
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `age` int(11) NOT NULL,
-  `sex` set('male','female') NOT NULL,
+  `gender` set('male','female') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
