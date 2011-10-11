@@ -24,42 +24,68 @@ session_start();
 			$_SESSION['user_id'] = $mysqli->insert_id;
 			#initialize survey numbering stack/list/array
 			#$questions = init_survey();
-			$questions = array(1,2,3,4,5,6);
+			$_SESSION['question_array'] = array(1,2,3,4,5,6);
 			#set state to number of first quiz
-			$_SESSION['state'] = array_pop($questions);
-			#redirect here
+			$current_question = array_shift($_SESSION['question_array']);
+			if(!isset($current_question)){ #if there are no more questions
+				$_SESSION['state'] = 'finish';
+			}
+			else{
+				$_SESSION['state'] = $current_question;
+			}
+			header('Location: start.php');
 		}
 		else{ #either age or gender wasn't passed, or age is blank or not a number
 			header('Location: index.php');
 		}
 	}
 	#else if state is a number
-	else if(is_numeric($_SESSION['state']){
+	elseif(is_numeric($_SESSION['state'])){
 	     #if question has been answered
-	     	 #submit the answer
-	     	 #pop next question number
-	     	 #the page will load with the proper info for the form below
-	     
-	     #else if question has not been answered
+		 if(isset($_POST['answer'])){
+			$mysqli = new mysqli($g_db_hostname, $g_db_username, $g_db_password, $g_db_dbname);
+			if ($mysqli->connect_error) {
+				die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+			}
+			$stmt = $mysqli->prepare("INSERT into results (picture_id, user_id, answer) VALUES (?,?,?)");
+			$stmt->bind_param("iii", $_SESSION['state'], $_SESSION['user_id'], $_POST['answer']);
+			$stmt->execute();
+
+	     	#submit the answer
+	     	#pop next question number
+			$current_question = array_shift($_SESSION['question_array']);
+			if(!isset($current_question)){ #if there are no more questions
+				$_SESSION['state'] = 'finish';
+			}
+			else{
+				$_SESSION['state'] = $current_question;
+			}
+			header('Location: start.php');
+		}
+		#else if question has not been answered
+		
 	     	   #then we are starting our quiz and display it below
 		   #do nothing here
 	}
 	#if state is null, indicating that there are no more questions
-	#redirect to finish.php
-	if( $_SESSION['state'] == 
-
-
-
-
-
-
-	#submit to this form?
-
+	if($_SESSION['state'] == 'finish'){
+		header('Location: finish.php');
+	}
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <body>
-The user's age is <?php echo $_POST['age']?> 
-and gender is <?php echo $_POST['gender']?> 
-and db id is <?php echo $_SESSION['user_id']?>
+<form id='survey' method='post' action='start.php'>
+<!-- <input type="hidden" name="redirect" value="start.php" /> -->
+ <label for="answer">Answer <?php echo $_SESSION['state']?></label>
+ <label for="low">Not Very</label> <input type="radio" id="low" name="answer" value="1" />
+ <input type="radio" name="answer" value="2" />
+ <input type="radio" name="answer" value="3" />
+ <input type="radio" name="answer" value="4" />
+ <input type="radio" name="answer" value="5" />
+ <input type="radio" name="answer" value="6" />
+ <input type="radio" id="high" name="answer" value="7" />
+ <label for ="high">Very</label>
+
+ <input type="submit" value="Submit" />
 </body>
 </html>
