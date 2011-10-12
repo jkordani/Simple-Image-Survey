@@ -7,7 +7,6 @@ $_SESSION['state']='start';
 <title>Survey Start Page</title>
 </head>
 <body>
-Session state is <?php echo $_SESSION['state']?>
 <div id="banner">
 A Banner
 </div>
