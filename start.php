@@ -23,7 +23,7 @@ session_start();
 			#set session user id
 			$_SESSION['user_id'] = $mysqli->insert_id;
 			#initialize survey numbering stack/list/array
-			#$questions = init_survey();
+			#$questions = init_survey(); this checks for ordering file, if exist read in, otherwise make and then read in.
 			$_SESSION['question_array'] = array(1,2,3,4,5,6);
 			#set state to number of first quiz
 			$current_question = array_shift($_SESSION['question_array']);
@@ -62,10 +62,11 @@ session_start();
 			}
 			header('Location: start.php');
 		}
-		#else if question has not been answered
+		#else question has not been answered
 		
 	     	   #then we are starting our quiz and display it below
-		   #do nothing here
+			   #do nothing...?
+		 
 	}
 	#if state is null, indicating that there are no more questions
 	if($_SESSION['state'] == 'finish'){
@@ -74,9 +75,9 @@ session_start();
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <body>
+<img onload="window.alert('welcome to my home page!');" src="./images/<?php echo $_SESSION['state'] . ".jpg";?>" /> 
 <form id='survey' method='post' action='start.php'>
 <!-- <input type="hidden" name="redirect" value="start.php" /> -->
- <label for="answer">Answer <?php echo $_SESSION['state']?></label>
  <label for="low">Not Very</label> <input type="radio" id="low" name="answer" value="1" />
  <input type="radio" name="answer" value="2" />
  <input type="radio" name="answer" value="3" />
