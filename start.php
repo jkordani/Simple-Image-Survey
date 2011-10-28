@@ -76,14 +76,14 @@ session_start();
 <html>
 <head>
 <script type="text/javascript">
-window.onload() = function() {
+window.onload = function() {
 
    var image = document.getElementById('survey_image');
    if(!image.complete){
-	setTimeout(function(), 100);
+	window.setTimeout('function\(\)', 100);
    }
    else{
-	setTimeout(document.forms['survey'].submit(), 5000);
+	window.setTimeout('document.forms[\'survey\'].submit\(\)', 5000);
    }
 
 }
@@ -115,7 +115,7 @@ button.surveybutton
 <div id="survey">
 <img id='survey_image' src="./images/<?php echo $_SESSION['state'] . ".jpg";?>" /> 
 <form id='survey' method='post' action='start.php'>
- 
+ <input type="hidden" name="answer" value="0" />
  <button type="submit" name="answer" class="surveybutton" value="1">1</button>
  <button type="submit" name="answer" class="surveybutton" value="2">2</button>
  <button type="submit" name="answer" class="surveybutton" value="3">3</button>

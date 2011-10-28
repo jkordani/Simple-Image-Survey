@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `results` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `picture_id` bigint(20) unsigned NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
-  `answer` enum('1','2','3','4','5','6','7') NULL,
+  `answer` enum('0','1','2','3','4','5','6','7') NULL,
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
