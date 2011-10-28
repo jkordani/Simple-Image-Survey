@@ -10,14 +10,14 @@ session_start();
 	#if state is start
 	if($_SESSION['state'] == 'start'){
 		#check for submission of age and gender
-		if( isset($_POST['age']) && $_POST['age'] != '' && is_numeric($_POST['age']) && isset($_POST['gender'])){
+		if( isset($_SESSION['age']) && isset($_SESSION['gender'])){
 			$mysqli = new mysqli($g_db_hostname, $g_db_username, $g_db_password, $g_db_dbname);
 			if ($mysqli->connect_error) {
 				die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 			}
 			#submit to database
 			$stmt = $mysqli->prepare("INSERT into users (age, gender) VALUES (?,?)");
-			$stmt->bind_param("is", $_POST['age'], $_POST['gender']);
+			$stmt->bind_param("is", $_SESSION['age'], $_SESSION['gender']);
 			$stmt->execute();
 			#fetch last id
 			#set session user id
@@ -74,19 +74,46 @@ session_start();
 	}
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+<head>
+<style type="text/css">
+
+button.surveybutton
+{
+   width:13.8%;
+   height:50px;
+}
+
+#survey {
+  position:relative;
+  width:600px;
+}
+#anchor_left {
+  float:left;
+}
+#anchor_right {
+  float:right;
+}
+
+</style>
+
+</head>
 <body>
+<div id="survey">
 <img onload="window.alert('welcome to my home page!');" src="./images/<?php echo $_SESSION['state'] . ".jpg";?>" /> 
 <form id='survey' method='post' action='start.php'>
-<!-- <input type="hidden" name="redirect" value="start.php" /> -->
- <label for="low">Not Very</label> <input type="radio" id="low" name="answer" value="1" />
- <input type="radio" name="answer" value="2" />
- <input type="radio" name="answer" value="3" />
- <input type="radio" name="answer" value="4" />
- <input type="radio" name="answer" value="5" />
- <input type="radio" name="answer" value="6" />
- <input type="radio" id="high" name="answer" value="7" />
- <label for ="high">Very</label>
+ 
+ <button type="submit" name="answer" class="surveybutton" value="1">1</button>
+ <button type="submit" name="answer" class="surveybutton" value="2">2</button>
+ <button type="submit" name="answer" class="surveybutton" value="3">3</button>
+ <button type="submit" name="answer" class="surveybutton" value="4">4</button>
+ <button type="submit" name="answer" class="surveybutton" value="5">5</button>
+ <button type="submit" name="answer" class="surveybutton" value="6">6</button>
+ <button type="submit" name="answer" class="surveybutton" value="7">7</button>
 
- <input type="submit" value="Submit" />
+</form>
+
+<div id="anchor_left">NOT AT ALL<br />ATTRIBUTE</div>
+<div id="anchor_right">VERY<br />ATTRIBUTE</div>
+</div>
 </body>
 </html>
