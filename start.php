@@ -75,6 +75,20 @@ session_start();
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
+<script type="text/javascript">
+window.onload() = function() {
+
+   var image = document.getElementById('survey_image');
+   if(!image.complete){
+	setTimeout(function(), 100);
+   }
+   else{
+	setTimeout(document.forms['survey'].submit(), 5000);
+   }
+
+}
+
+</script>
 <style type="text/css">
 
 button.surveybutton
@@ -99,7 +113,7 @@ button.surveybutton
 </head>
 <body>
 <div id="survey">
-<img onload="window.alert('welcome to my home page!');" src="./images/<?php echo $_SESSION['state'] . ".jpg";?>" /> 
+<img id='survey_image' src="./images/<?php echo $_SESSION['state'] . ".jpg";?>" /> 
 <form id='survey' method='post' action='start.php'>
  
  <button type="submit" name="answer" class="surveybutton" value="1">1</button>
@@ -113,7 +127,7 @@ button.surveybutton
 </form>
 
 <div id="anchor_left">NOT AT ALL<br />ATTRIBUTE</div>
-<div id="anchor_right">VERY<br />ATTRIBUTE</div>
+<div id="anchor_right">VERY <br />ATTRIBUTE</div>
 </div>
 </body>
 </html>
