@@ -1,12 +1,22 @@
 <?php
 require_once('config.php');
+#require_once('helpers.php');
 session_start();
 	#check for session state
 	#if state is blank redirect to index
 	if(!isset($_SESSION['state'])){
 		header('Location: index.php');
 	}
-	
+	#if state is training,
+	#initialize question array to the first 10 images
+	#while there are still images in the array
+	#pop one off display it below
+	if($_SESSION['state'] == 'training_start'){
+		$_SESSION['question_array'] = array(1,2,3,4,5,6);
+		$_SESSION['state'] = 'training';
+	}
+
+
 	#if state is start
 	if($_SESSION['state'] == 'start'){
 		#check for submission of age and gender
@@ -15,60 +25,51 @@ session_start();
 			if ($mysqli->connect_error) {
 				die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 			}
-			#submit to database
+
+		 	#submit to database
 			$stmt = $mysqli->prepare("INSERT into users (age, gender) VALUES (?,?)");
 			$stmt->bind_param("is", $_SESSION['age'], $_SESSION['gender']);
 			$stmt->execute();
-			#fetch last id
-			#set session user id
+
+		 	#fetch last id
+		 	#set session user id
 			$_SESSION['user_id'] = $mysqli->insert_id;
-			#initialize survey numbering stack/list/array
-			#$questions = init_survey(); this checks for ordering file, if exist read in, otherwise make and then read in.
+
+		 	#initialize survey numbering stack/list/array
+		 	#$questions = init_survey(); this checks for ordering file, if exist read in, otherwise make and then read in.
 			$_SESSION['question_array'] = array(1,2,3,4,5,6);
-			#set state to number of first quiz
-			$current_question = array_shift($_SESSION['question_array']);
-			if(!isset($current_question)){ #if there are no more questions
-				$_SESSION['state'] = 'finish';
-			}
-			else{
-				$_SESSION['state'] = $current_question;
-			}
-			header('Location: start.php');
-		}
+
+ 		}
 		else{ #either age or gender wasn't passed, or age is blank or not a number
 			header('Location: index.php');
 		}
+		$_SESSION['state'] = 'live';
 	}
-	#else if state is a number
-	elseif(is_numeric($_SESSION['state'])){
-	     #if question has been answered
-		 if(isset($_POST['answer'])){
-			$mysqli = new mysqli($g_db_hostname, $g_db_username, $g_db_password, $g_db_dbname);
-			if ($mysqli->connect_error) {
-				die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-			}
-			$stmt = $mysqli->prepare("INSERT into results (picture_id, user_id, answer) VALUES (?,?,?)");
-			$stmt->bind_param("iii", $_SESSION['state'], $_SESSION['user_id'], $_POST['answer']);
-			$stmt->execute();
 
-	     	#submit the answer
-	     	#pop next question number
-			$current_question = array_shift($_SESSION['question_array']);
-			if(!isset($current_question)){ #if there are no more questions
-				$_SESSION['state'] = 'finish';
-			}
-			else{
-				$_SESSION['state'] = $current_question;
-			}
-			header('Location: start.php');
+     	#if question has been answered, submit it.
+	if(isset($_POST['answer']) && $_SESSION['state'] == 'live'){
+		$mysqli = new mysqli($g_db_hostname, $g_db_username, $g_db_password, $g_db_dbname);
+		if ($mysqli->connect_error) {
+			die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 		}
-		#else question has not been answered
-		
-	     	   #then we are starting our quiz and display it below
-			   #do nothing...?
-		 
+		$stmt = $mysqli->prepare("INSERT into results (picture_id, user_id, answer) VALUES (?,?,?)");
+		$stmt->bind_param("iii", $_POST['pic_num'], $_SESSION['user_id'], $_POST['answer']);
+		$stmt->execute();
 	}
-	#if state is null, indicating that there are no more questions
+
+     	#pop next question number
+	$current_question = array_shift($_SESSION['question_array']);
+
+	#if there are no more questions, and we're training, go to training_complete, else go to finish.
+	if(!isset($current_question)){ 
+		if($_SESSION['state'] == 'training'){
+		        header('Location: training_complete.php');
+		}
+		if($_SESSION['state'] == 'live'){
+			$_SESSION['state'] = 'finish';
+		}
+	}
+		
 	if($_SESSION['state'] == 'finish'){
 		header('Location: finish.php');
 	}
@@ -112,10 +113,12 @@ button.surveybutton
 
 </head>
 <body>
+<?php echo $_SESSION['state']; echo $current_question;?>
 <div id="survey">
-<img id='survey_image' src="./images/<?php echo $_SESSION['state'] . ".jpg";?>" /> 
-<form id='survey' method='post' action='start.php'>
+<img id="survey_image" src="./images/<?php echo $current_question . ".jpg";?>" /> 
+<form id="survey" method="post" action="start.php">
  <input type="hidden" name="answer" value="0" />
+ <input type="hidden" name="pic_num" value="<?php echo $current_question;?>" />
  <button type="submit" name="answer" class="surveybutton" value="1">1</button>
  <button type="submit" name="answer" class="surveybutton" value="2">2</button>
  <button type="submit" name="answer" class="surveybutton" value="3">3</button>
