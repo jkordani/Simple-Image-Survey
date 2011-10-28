@@ -15,8 +15,7 @@ Fill out the form below
 </div>
 <div id="login">
 <p> A form will be here. </p>
-<form id="new-user" action="start.php" method="post">
- <input type="hidden" name="redirect" value="start.php" />
+<form id="new-user" action="instructions.php" method="post">
  <label for="age">Age:</label>
  <input type="text" id="age" name="age" maxlength="2"/>
  <label for="male-gender">Male</label>
