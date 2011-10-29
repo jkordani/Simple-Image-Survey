@@ -1,6 +1,6 @@
 <?php
 require_once('config.php');
-#require_once('helpers.php');
+require_once('helpers.php');
 session_start();
 	#check for session state
 	#if state is blank redirect to index
@@ -12,7 +12,7 @@ session_start();
 	#while there are still images in the array
 	#pop one off display it below
 	if($_SESSION['state'] == 'training_start'){
-		$_SESSION['question_array'] = array(1,2,3,4,5,6);
+		$_SESSION['question_array'] = array("1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg");
 		$_SESSION['state'] = 'training';
 	}
 
@@ -36,8 +36,9 @@ session_start();
 			$_SESSION['user_id'] = $mysqli->insert_id;
 
 		 	#initialize survey numbering stack/list/array
-		 	#$questions = init_survey(); this checks for ordering file, if exist read in, otherwise make and then read in.
-			$_SESSION['question_array'] = array(1,2,3,4,5,6);
+			#this checks for ordering file, if exist read in, otherwise make and then read in.
+		 	$_SESSION['question_array'] = init_survey(); 
+			#$_SESSION['question_array'] = array(1,2,3,4,5,6);
 
  		}
 		else{ #either age or gender wasn't passed, or age is blank or not a number
@@ -58,10 +59,13 @@ session_start();
 	}
 
      	#pop next question number
-	$current_question = array_shift($_SESSION['question_array']);
-
+	$current_question_filename = array_shift($_SESSION['question_array']);
+	if(isset($current_question_filename)){
+		$info = pathinfo($current_question_filename);
+		$current_question_number = (int) basename($current_question_filename,'.'.$info['extension']);
+	}
 	#if there are no more questions, and we're training, go to training_complete, else go to finish.
-	if(!isset($current_question)){ 
+	if(!isset($current_question_filename)){ 
 		if($_SESSION['state'] == 'training'){
 		        header('Location: training_complete.php');
 		}
@@ -76,6 +80,7 @@ session_start();
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
 <script type="text/javascript">
 window.onload = function() {
 
@@ -90,47 +95,30 @@ window.onload = function() {
 }
 
 </script>
-<style type="text/css">
-
-button.surveybutton
-{
-   width:13.8%;
-   height:50px;
-}
-
-#survey {
-  position:relative;
-  width:600px;
-}
-#anchor_left {
-  float:left;
-}
-#anchor_right {
-  float:right;
-}
-
-</style>
-
 </head>
 <body>
-<?php echo $_SESSION['state']; echo $current_question;?>
 <div id="survey">
-<img id="survey_image" src="./images/<?php echo $current_question . ".jpg";?>" /> 
-<form id="survey" method="post" action="start.php">
- <input type="hidden" name="answer" value="0" />
- <input type="hidden" name="pic_num" value="<?php echo $current_question;?>" />
- <button type="submit" name="answer" class="surveybutton" value="1">1</button>
- <button type="submit" name="answer" class="surveybutton" value="2">2</button>
- <button type="submit" name="answer" class="surveybutton" value="3">3</button>
- <button type="submit" name="answer" class="surveybutton" value="4">4</button>
- <button type="submit" name="answer" class="surveybutton" value="5">5</button>
- <button type="submit" name="answer" class="surveybutton" value="6">6</button>
- <button type="submit" name="answer" class="surveybutton" value="7">7</button>
-
-</form>
-
-<div id="anchor_left">NOT AT ALL<br />ATTRIBUTE</div>
-<div id="anchor_right">VERY <br />ATTRIBUTE</div>
+     <img id="survey_image" src="./images/<?php echo $current_question_filename;?>" /> 
+     <div id="controls_and_anchors">
+     <div id="controls">
+     	  <form id="survey" method="post" action="start.php">
+ 	  <input type="hidden" name="answer" value="0" />
+	  <input type="hidden" name="pic_num" value="<?php echo $current_question_number;?>" />
+	  <button type="submit" name="answer" class="surveybutton" value="1">1</button>
+	  <button type="submit" name="answer" class="surveybutton" value="2">2</button>
+	  <button type="submit" name="answer" class="surveybutton" value="3">3</button>
+	  <button type="submit" name="answer" class="surveybutton" value="4">4</button>
+	  <button type="submit" name="answer" class="surveybutton" value="5">5</button>
+	  <button type="submit" name="answer" class="surveybutton" value="6">6</button>
+	  <button type="submit" name="answer" class="surveybutton" value="7">7</button>
+	  </form>
+      </div>
+      <div id="anchors">
+           <div id="anchor_left">NOT AT ALL<br />ATTRIBUTE</div>
+	   <div id="anchor_right">VERY<br />ATTRIBUTE</div>
+	   <a id="quit" href="index.php">QUIT</a>
+      </div>
+      </div>
 </div>
 </body>
 </html>

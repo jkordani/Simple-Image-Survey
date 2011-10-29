@@ -9,8 +9,11 @@ else{
 }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+<head>
+<link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
+</head>
 <body>
-<h1> Attribute Study!</h1>
+<h3> Attribute Study!</h3>
 <p>Your task is to FILL IN THE BLANK . There are no right or wrong answers in the study. The entire survey will take about 20 minutes.</p>
 
 <p>During the study, you will be viewing images of people on this computer screen. Each image will be visible for about 5 seconds, then another image will automatically appear.</p>
@@ -19,9 +22,20 @@ else{
 
 <p>You will use the mouse to enter your rating by clicking on the number that corresponds to the rating of your choice.</p>
 
-1----------2----------3----------4----------5----------6----------7
-NOT OLD	 	EXTREMELY
-AT ALL 	 	OLD
+<div id="survey">
+ <button name="answer" class="surveybutton" value="1">1</button>
+ <button name="answer" class="surveybutton" value="2">2</button>
+ <button name="answer" class="surveybutton" value="3">3</button>
+ <button name="answer" class="surveybutton" value="4">4</button>
+ <button name="answer" class="surveybutton" value="5">5</button>
+ <button name="answer" class="surveybutton" value="6">6</button>
+ <button name="answer" class="surveybutton" value="7">7</button>
+ <div id="anchors">
+  <div id="anchor_left">NOT AT ALL<br />ATTRIBUTE</div>
+   <div id="anchor_right">VERY <br />ATTRIBUTE</div>
+ </div>
+</div>
+<div id="lower">
 <p>Be sure that you point the cursor to a number, not the spaces in between.</p>
 
 <p>Your rating will be highlighted when your response has been correctly entered.</p>
@@ -35,6 +49,7 @@ AT ALL 	 	OLD
 <p>The training session will begin when you click on the START button.</p>
 <form id="start_survey" method="post" action="start.php">
 <input type ="submit" value="Start" />
+</div>
 </form>
 </body>
 </html>

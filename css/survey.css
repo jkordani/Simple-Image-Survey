@@ -1,0 +1,35 @@
+button.surveybutton
+{
+   width:13.8%;
+   height:50px;
+}
+
+#survey {
+  position:relative;
+  width:600px;
+}
+#controls_and_anchors{
+  position:absolute;
+  top:175px;
+}
+#controls {
+  position:relative;
+}
+#anchors {
+  height:auto;
+  margin-bottom:60px;
+}
+#anchor_left {
+  float:left;
+}
+#anchor_right {
+  float:right;
+}
+#quit{
+  float:right;
+  margin-top:100px;
+  clear:both;
+}
+#lower {
+  clear:both;
+}
