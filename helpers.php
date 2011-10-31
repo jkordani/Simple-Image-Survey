@@ -1,5 +1,5 @@
 <?php
-function init_survey(){
+function init_survey($images_directory){
 	 #if ordering file exists, read it in and return it
 	 if(file_exists('ordering')){
 		$ordering_fh = fopen("ordering","r");
@@ -10,10 +10,18 @@ function init_survey(){
 	 }
 	 #else read in a list of files from the array, mod it, store it
 	 else{
-		$ordering_array = scandir('images');
+		$ordering_array = scandir($images_directory);
+
 		#do this twice to get rid of . and .. from listing.
 		array_shift($ordering_array);
 		array_shift($ordering_array);
+
+		#do this to remove the thumbs file from the listing if present
+		$thumbs = array_search("Thumbs.db", $ordering_array);
+		if($thumbs !== FALSE){
+			   unset($ordering_array[$thumbs]);
+		}
+
 		shuffle($ordering_array);
 		$ordering_fh = fopen("ordering","w+");
 		$ordering_sstring = serialize($ordering_array);
@@ -23,7 +31,8 @@ function init_survey(){
 	 }
 
 }
-#$arrays = init_survey();
+
+#$arrays = init_survey('images_live');
 #print_r($arrays);
 #print_r(unserialize(serialize($arrays)));
 

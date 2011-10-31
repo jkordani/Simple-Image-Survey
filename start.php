@@ -12,7 +12,7 @@ session_start();
 	#while there are still images in the array
 	#pop one off display it below
 	if($_SESSION['state'] == 'training_start'){
-		$_SESSION['question_array'] = array("1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg");
+		$_SESSION['question_array'] = $g_training_array;
 		$_SESSION['state'] = 'training';
 	}
 
@@ -37,8 +37,7 @@ session_start();
 
 		 	#initialize survey numbering stack/list/array
 			#this checks for ordering file, if exist read in, otherwise make and then read in.
-		 	$_SESSION['question_array'] = init_survey(); 
-			#$_SESSION['question_array'] = array(1,2,3,4,5,6);
+		 	$_SESSION['question_array'] = init_survey($g_live_images_folder); 
 
  		}
 		else{ #either age or gender wasn't passed, or age is blank or not a number
@@ -57,7 +56,14 @@ session_start();
 		$stmt->bind_param("iii", $_POST['pic_num'], $_SESSION['user_id'], $_POST['answer']);
 		$stmt->execute();
 	}
-
+	#set the base image directory, if training then images_training, if live then images_live
+	if($_SESSION['state'] == 'training'){
+		$img_folder = $g_training_images_folder;
+	}
+	elseif($_SESSION['state'] == 'live'){
+		$img_folder = $g_live_images_folder;
+	}
+	
      	#pop next question number
 	$current_question_filename = array_shift($_SESSION['question_array']);
 	if(isset($current_question_filename)){
@@ -77,6 +83,7 @@ session_start();
 	if($_SESSION['state'] == 'finish'){
 		header('Location: finish.php');
 	}
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -98,7 +105,7 @@ window.onload = function() {
 </head>
 <body>
 <div id="survey">
-     <img id="survey_image" src="./images/<?php echo $current_question_filename;?>" /> 
+     <img id="survey_image" src="<?php echo $img_folder . '/' . $current_question_filename;?>" /> 
      <div id="controls_and_anchors">
      <div id="controls">
      	  <form id="survey" method="post" action="start.php">

@@ -30,5 +30,7 @@ now. If not, you can begin by clicking on the START button.</p>
 <input type="submit" value="Start">
 </FORM>
 
+<br />
+<a id="quit" href="index.php">QUIT</a>
 
 </html>
