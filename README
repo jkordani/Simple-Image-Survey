@@ -1,1 +1,68 @@
-install instructions to follow
+Download and install the WAMP server application.
+
+Start wamp server from the tray icon (ignore the hover text as it might be misleading, instead wait for the icon to turn green)
+
+download "simple image survey" from github
+
+unpack all files into a subfolder of wamp/www, hereafter referred to as "distribution folder"
+
+point a browser to localhost
+
+open phpmyadmin
+
+create database, hereafter database name
+
+after creation click databases tab, click the name of your new database
+
+click import tab
+
+click "choose file", browse to the distribution directory
+
+choose test.sql
+
+click go at the bottom.
+
+click on the database name again
+
+click on the privileges tab
+
+add new user, choose a user name and password, make sure the radio for grant all privileges for this user on database "name" is selected
+
+click go at the bottom
+
+edit config.php in distribution directory
+
+enter the username, password, and database name and save it.  You may have to use notepad because line endings may be unix, but do not have to be preserved.  It is safe to modify.
+
+The distribution comes with sample jpeg images in images_training and images_live, and may be used as an example when naming and placing your own images.  They are safe to modify or remove, per the instructions below.
+
+place images in the folders named images_training and images_live, per the config.php file.
+
+make sure that the image filenames in images_live consist of numbers only.  The extension is ignored.
+
+e.g., acceptable filenames are "1.jpg" "2.bmp". unacceptable names are "sample_1.jpg" "three.bmp"
+
+However, the filenames in images_training can be anything you desire.
+
+In config.php, edit this line:
+
+	$g_training_array = array( "t_one.jpg",
+			    	   "t_two.jpg",
+				   "t_three.jpg",
+				   "t_four.jpg",
+				   "t_five.jpg",
+				   "t_six.jpg"   #note this item doesn't get a trailing comma
+				 );
+
+Change the names in quotes to be the training images you desire to show.
+The order they are presented in is top to bottom.
+
+Now the survey is live.  The first person to begin a real quiz will generate an ordering file.  This file describes the random order in which the live images will be presented, which will be the same among all users in the survey.  If you need to reuse this software for a new survey, delete the ordering file before beginning.  This file is text, but isn't meant to be read by humans.
+
+For now, you will have to use phpmyadmin manually to "reset" the data.  However, note that for the life of the wamp server softwareinstallation, the internal representations of the user ids and the results ids will be unique, even after deletes.
+
+i.e., if you do a run of 10 users and 2000 questions and want to start over, after deleting all the data, the next time a survey is run, the first user to run it will become user 11 and their first answer will become result 2001.  This is by design.  so you may still mix data from different "runs" (as defined in this paragraph) while keeping the survey takers and their answers consistent
+
+In order to reset the numbers completely, you must drop the whole database and re import the .sql file per this README.
+
+Currently, this survey waits until the browser has completely loaded the image before beginning the 5 second cooldown.  However, while the image loads it may be partially visible for a time.  Further robustness can be fairly easily added, email the maintainer.
