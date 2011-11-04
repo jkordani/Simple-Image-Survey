@@ -1,0 +1,5 @@
+Add multiple survey support
+new column in users table, update test.sql
+config.php - new array keys = survey name, values = image directory
+admin page for switching surveys into global and ensuring proper db setup
+start.php - submission of new user needs to include survey (if blank, pop first, but how do I get the key of it?) array_pop(array_keys(array))
