@@ -13,6 +13,7 @@ else{
 <link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
 </head>
 <body>
+<div id="Content">
 <h3> Attribute Study!</h3>
 <p>Your task is to FILL IN THE BLANK . There are no right or wrong answers in the study. The entire survey will take about 20 minutes.</p>
 
@@ -49,7 +50,10 @@ else{
 <p>The training session will begin when you click on the START button.</p>
 <form id="start_survey" method="post" action="start.php">
 <input type ="submit" value="Start" />
+<br />
+<a id="quit" href="index.php">QUIT</a>
 </div>
 </form>
+</div>
 </body>
 </html>

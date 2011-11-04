@@ -104,6 +104,7 @@ window.onload = function() {
 </script>
 </head>
 <body>
+<div id="Content">
 <div id="survey">
      <img id="survey_image" src="<?php echo $img_folder . '/' . $current_question_filename;?>" /> 
      <div id="controls_and_anchors">
@@ -126,6 +127,7 @@ window.onload = function() {
 	   <a id="quit" href="index.php">QUIT</a>
       </div>
       </div>
+</div>
 </div>
 </body>
 </html>

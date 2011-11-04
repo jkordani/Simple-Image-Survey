@@ -4,12 +4,12 @@ $_SESSION['state'] = 'start';
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<title>Emotional Eye Study Training</title>
-
+<link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
+<title>Emotional Eye Study Training</title>
 </head>
 
 <body>
-
+<div id="Content">
 <h3>ATTRIBUTE Study Training</h3>
 <p>Training is complete. Nicely done!</p>
 
@@ -32,5 +32,6 @@ now. If not, you can begin by clicking on the START button.</p>
 
 <br />
 <a id="quit" href="index.php">QUIT</a>
-
+</div>
+</body>
 </html>

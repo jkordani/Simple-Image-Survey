@@ -4,9 +4,11 @@ $_SESSION['state']='training_start';
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
 <title>Survey Start Page</title>
 </head>
 <body>
+<div id="Content">
 <div id="banner">
 A Banner
 </div>
@@ -24,6 +26,7 @@ Fill out the form below
  <input type="radio" id="female-gender" name="gender" value="female" />
  <input type="submit" value="Start" />
 </form>
+</div>
 </div>
 </body>
 </html>
