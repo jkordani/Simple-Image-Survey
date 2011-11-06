@@ -1,7 +1,7 @@
 <?php
 	#globals section
-	$g_db_username = 'sis';
-	$g_db_password = 'jessica';
+	$g_db_username = 'root';
+	$g_db_password = 'root';
 	$g_db_dbname = 'test';
 
 
@@ -13,15 +13,20 @@
 				   "t_three.jpg",
 				   "t_four.jpg",
 				   "t_five.jpg",
-				   "t_six.jpg"   #note this item doesn't get a trailing comma
+				   "t_six.jpg"   #note this last item doesn't get a trailing comma'
 				 );
 
 	#MODIFY THE BELOW ITEMS AT YOUR OWN PERIL
 	$g_db_hostname = 'localhost';
 	$g_training_images_folder = 'images_training';
 
-	#these images must be named with a number e.g. '1.jpg' '2.bmp'.  Their extension is immaterial.
-	$g_live_images_folder = 'images_live';
+	$g_current_survey_file = 'survey';
+
+	#Array of survey image directories
+	$g_survey_array = array( "Attractiveness_red",
+			  	 "Attractiveness_white",
+				 "Attractiveness_yellow" #note the last item doesn't get a trailing comma
+			       );
 
 
 ?>

@@ -19,6 +19,14 @@ session_start();
 
 	#if state is start
 	if($_SESSION['state'] == 'start'){
+
+	        $current_survey = get_string_from_file($g_current_survey_file);
+		#if blank, pop array and set file
+		if(!isset($current_survey) || $current_survey == ''){
+			$current_survey = array_pop($g_survey_array);
+			set_string_to_file($current_survey, $g_current_survey_file);
+		}
+		
 		#check for submission of age and gender
 		if( isset($_SESSION['age']) && isset($_SESSION['gender'])){
 			$mysqli = new mysqli($g_db_hostname, $g_db_username, $g_db_password, $g_db_dbname);
@@ -27,8 +35,12 @@ session_start();
 			}
 
 		 	#submit to database
-			$stmt = $mysqli->prepare("INSERT into users (age, gender) VALUES (?,?)");
-			$stmt->bind_param("is", $_SESSION['age'], $_SESSION['gender']);
+			$stmt = $mysqli->prepare("INSERT into users (age, gender, survey_name) VALUES (?,?,?)");
+			$stmt->bind_param( "iss",
+					   $_SESSION['age'],
+					   $_SESSION['gender'],
+					   $current_survey
+					 );
 			$stmt->execute();
 
 		 	#fetch last id
@@ -36,8 +48,7 @@ session_start();
 			$_SESSION['user_id'] = $mysqli->insert_id;
 
 		 	#initialize survey numbering stack/list/array
-			#this checks for ordering file, if exist read in, otherwise make and then read in.
-		 	$_SESSION['question_array'] = init_survey($g_live_images_folder); 
+		 	$_SESSION['question_array'] = init_survey($current_survey); 
 
  		}
 		else{ #either age or gender wasn't passed, or age is blank or not a number
@@ -106,6 +117,8 @@ window.onload = function() {
 <body>
 <div id="Content">
 <div id="survey">
+     <-- <?php print_r($_SESSION['question_array']);?> -->
+     <?php echo "The current survey is " . $g_current_survey . '.';?>
      <img id="survey_image" src="<?php echo $img_folder . '/' . $current_question_filename;?>" /> 
      <div id="controls_and_anchors">
      <div id="controls">

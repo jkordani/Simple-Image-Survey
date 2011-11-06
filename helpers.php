@@ -32,6 +32,28 @@ function init_survey($images_directory){
 
 }
 
+function get_string_from_file($filename){
+	 if(!file_exists($filename)){
+		return '';
+	}
+	$file_h = fopen($filename,"r");
+	$survey = fgets($file_h);
+	fclose($file_h);
+	return $survey;
+}
+
+function set_string_to_file($string, $filename){
+	$file_h = fopen($filename, "w+");
+	fputs($file_h, $string);
+	fclose($file_h);
+}
+
+#$sstring =  get_string_from_file('test');
+#echo "There should be nothing in between the braces (" . $sstring . ")\n";
+#printf("%s", $sstring);
+#echo "Sending test string to file.\n"; set_string_to_file('teststring', 'test');
+#echo "There should be the word teststring between the braces (" . get_string_from_file('test') . ")";
+
 #$arrays = init_survey('images_live');
 #print_r($arrays);
 #print_r(unserialize(serialize($arrays)));

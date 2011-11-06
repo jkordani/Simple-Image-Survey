@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `results` (
   `picture_id` bigint(20) unsigned NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
   `answer` enum('0','1','2','3','4','5','6','7') NULL,
-  UNIQUE KEY `id` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `age` int(11) NOT NULL,
   `gender` set('male','female') NOT NULL,
+  `survey_name` varchar(256) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
