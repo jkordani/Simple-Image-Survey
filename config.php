@@ -1,4 +1,6 @@
 <?php
+require_once('helpers.php');
+
 	#globals section
 	$g_db_username = 'root';
 	$g_db_password = 'root';
@@ -27,6 +29,14 @@
 			  	 "Attractiveness_white",
 				 "Attractiveness_yellow" #note the last item doesn't get a trailing comma
 			       );
+
+	$g_current_survey = get_string_from_file($g_current_survey_file);
+	if(!isset($g_current_survey) || $g_current_survey == ''){
+        	$temp_survey_array = $g_survey_array;
+		$current_survey = array_shift($temp_survey_array);
+		set_string_to_file($g_current_survey, $g_current_survey_file);
+	}
+
 
 
 ?>

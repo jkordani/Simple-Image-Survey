@@ -16,17 +16,10 @@ session_start();
 		$_SESSION['state'] = 'training';
 	}
 
-
 	#if state is start
 	if($_SESSION['state'] == 'start'){
 
-	        $current_survey = get_string_from_file($g_current_survey_file);
-		#if blank, pop array and set file
-		if(!isset($current_survey) || $current_survey == ''){
-			$current_survey = array_pop($g_survey_array);
-			set_string_to_file($current_survey, $g_current_survey_file);
-		}
-		
+	        	
 		#check for submission of age and gender
 		if( isset($_SESSION['age']) && isset($_SESSION['gender'])){
 			$mysqli = new mysqli($g_db_hostname, $g_db_username, $g_db_password, $g_db_dbname);
@@ -39,7 +32,7 @@ session_start();
 			$stmt->bind_param( "iss",
 					   $_SESSION['age'],
 					   $_SESSION['gender'],
-					   $current_survey
+					   $g_current_survey
 					 );
 			$stmt->execute();
 
@@ -48,7 +41,7 @@ session_start();
 			$_SESSION['user_id'] = $mysqli->insert_id;
 
 		 	#initialize survey numbering stack/list/array
-		 	$_SESSION['question_array'] = init_survey($current_survey); 
+		 	$_SESSION['question_array'] = init_survey($g_current_survey); 
 
  		}
 		else{ #either age or gender wasn't passed, or age is blank or not a number
@@ -72,7 +65,7 @@ session_start();
 		$img_folder = $g_training_images_folder;
 	}
 	elseif($_SESSION['state'] == 'live'){
-		$img_folder = $g_live_images_folder;
+		$img_folder = $g_current_survey;
 	}
 	
      	#pop next question number
