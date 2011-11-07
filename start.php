@@ -110,8 +110,8 @@ window.onload = function() {
 <body>
 <div id="Content">
 <div id="survey">
-     <-- <?php print_r($_SESSION['question_array']);?> -->
-     <?php echo "The current survey is " . $g_current_survey . '.';?>
+     <?php #print_r($_SESSION['question_array']);?>
+     <?php #echo "The current survey is " . $g_current_survey . '.';?>
      <img id="survey_image" src="<?php echo $img_folder . '/' . $current_question_filename;?>" /> 
      <div id="controls_and_anchors">
      <div id="controls">
