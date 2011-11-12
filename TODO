@@ -1,6 +1,6 @@
 Add multiple survey support
 (done) new column in users table, update test.sql
 (done) config.php - new array keys = survey name, values = image directory
-(make convenience list, and auto set survey if blank) admin page for switching surveys into flat file and ensuring proper db setup 
+(done) (make convenience list, and auto set survey if blank) admin page for switching surveys into flat file and ensuring proper db setup 
 (done) start.php - submission of new user needs to include survey, if unset, set.
 (done) helpers.php inclusion of get_string_from_file and set_string_to_file

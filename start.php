@@ -93,14 +93,23 @@ session_start();
 <head>
 <link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
 <script type="text/javascript">
+function enableButtons(truefalse) {
+    var buttons = document.getElementsByName('answer');
+    for(var i=0; i<buttons.length; i++){
+	buttons[i].disabled = !truefalse;
+    }
+}
+
 window.onload = function() {
 
    var image = document.getElementById('survey_image');
    if(!image.complete){
-	window.setTimeout('function\(\)', 100);
+       window.setTimeout('function\(\)', 100);
+       enableButtons(false);
    }
    else{
-	window.setTimeout('document.forms[\'survey\'].submit\(\)', 5000);
+       window.setTimeout('document.forms[\'survey\'].submit\(\)', 5000);
+       enableButtons(true);
    }
 
 }
@@ -112,10 +121,11 @@ window.onload = function() {
 <div id="survey">
      <?php #print_r($_SESSION['question_array']);?>
      <?php #echo "The current survey is " . $g_current_survey . '.';?>
+     <?php echo $current_question_filename;?>
      <img id="survey_image" src="<?php echo $img_folder . '/' . $current_question_filename;?>" /> 
      <div id="controls_and_anchors">
      <div id="controls">
-     	  <form id="survey" method="post" action="start.php">
+          <form id="survey" method="post" onsubmit="enableButtons(false)" action="start.php">
  	  <input type="hidden" name="answer" value="0" />
 	  <input type="hidden" name="pic_num" value="<?php echo $current_question_number;?>" />
 	  <button type="submit" name="answer" class="surveybutton" value="1">1</button>
