@@ -103,13 +103,15 @@ function enableButtons(truefalse) {
 window.onload = function() {
 
    var image = document.getElementById('survey_image');
+   enableButtons(false);
    if(!image.complete){
-       window.setTimeout('function\(\)', 100);
        enableButtons(false);
+       var refresh = window.setTimeout('function\(\)', 100);
    }
    else{
+       window.clearTimeout(refresh);
        window.setTimeout('document.forms[\'survey\'].submit\(\)', 5000);
-       enableButtons(true);
+       window.setTimeout('enableButtons\(true\)', <?php echo $g_button_disable_time_ms;?>);
    }
 
 }

@@ -37,6 +37,8 @@ require_once('helpers.php');
 		set_string_to_file($g_current_survey, $g_current_survey_file);
 	}
 
+	$g_button_disable_time_ms = '250';
+
 
 
 ?>
