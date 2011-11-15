@@ -44,7 +44,7 @@ session_start();
 		 	$_SESSION['question_array'] = init_survey($g_current_survey); 
 
  		}
-		else{ #either age or gender wasn't passed, or age is blank or not a number
+		else{ #either age or gender wasn't passed, or age is blank or not a number'
 			header('Location: index.php');
 		}
 		$_SESSION['state'] = 'live';
@@ -58,6 +58,11 @@ session_start();
 		}
 		$stmt = $mysqli->prepare("INSERT into results (picture_id, user_id, answer) VALUES (?,?,?)");
 		$stmt->bind_param("iii", $_POST['pic_num'], $_SESSION['user_id'], $_POST['answer']);
+                #The above statememnt is poor form.
+		#answer is an enum column of 0 through 7, so I am passing in an index, not a value.
+		#the mysql documentation outlines this
+		#this is an accident and I intend to fix it.
+
 		$stmt->execute();
 	}
 	#set the base image directory, if training then images_training, if live then images_live
@@ -74,7 +79,7 @@ session_start();
 		$info = pathinfo($current_question_filename);
 		$current_question_number = (int) basename($current_question_filename,'.'.$info['extension']);
 	}
-	#if there are no more questions, and we're training, go to training_complete, else go to finish.
+	#if there are no more questions, and we're training, go to training_complete, else go to finish.'
 	if(!isset($current_question_filename)){ 
 		if($_SESSION['state'] == 'training'){
 		        header('Location: training_complete.php');
@@ -93,25 +98,28 @@ session_start();
 <head>
 <link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
 <script type="text/javascript">
-function enableButtons(truefalse) {
-    var buttons = document.getElementsByName('answer');
+function clickHandle(buttonNum){
+    disableButtons(true);
+    document.forms['survey'].answer.value = buttonNum;
+    document.forms['survey'].submit();
+}
+
+function disableButtons(truefalse) {
+    //var number = document.forms['survey'].answer;
+    var buttons = document.getElementsByClassName('surveybutton');
     for(var i=0; i<buttons.length; i++){
-	buttons[i].disabled = !truefalse;
+	buttons[i].disabled = truefalse;
     }
 }
 
 window.onload = function() {
-
    var image = document.getElementById('survey_image');
-   enableButtons(false);
    if(!image.complete){
-       enableButtons(false);
        var refresh = window.setTimeout('function\(\)', 100);
    }
    else{
-       window.clearTimeout(refresh);
+       window.setTimeout('enableButtons\(true\)', <?php echo $g_button_disable_time_ms;?>); 
        window.setTimeout('document.forms[\'survey\'].submit\(\)', 5000);
-       window.setTimeout('enableButtons\(true\)', <?php echo $g_button_disable_time_ms;?>);
    }
 
 }
@@ -123,20 +131,20 @@ window.onload = function() {
 <div id="survey">
      <?php #print_r($_SESSION['question_array']);?>
      <?php #echo "The current survey is " . $g_current_survey . '.';?>
-     <?php echo $current_question_filename;?>
+     <?php #echo $current_question_filename;?>
      <img id="survey_image" src="<?php echo $img_folder . '/' . $current_question_filename;?>" /> 
      <div id="controls_and_anchors">
      <div id="controls">
-          <form id="survey" method="post" onsubmit="enableButtons(false)" action="start.php">
- 	  <input type="hidden" name="answer" value="0" />
+          <form id="survey" method="post" action="start.php">
+ 	  <input type="hidden" name="answer" value='0' />
 	  <input type="hidden" name="pic_num" value="<?php echo $current_question_number;?>" />
-	  <button type="submit" name="answer" class="surveybutton" value="1">1</button>
-	  <button type="submit" name="answer" class="surveybutton" value="2">2</button>
-	  <button type="submit" name="answer" class="surveybutton" value="3">3</button>
-	  <button type="submit" name="answer" class="surveybutton" value="4">4</button>
-	  <button type="submit" name="answer" class="surveybutton" value="5">5</button>
-	  <button type="submit" name="answer" class="surveybutton" value="6">6</button>
-	  <button type="submit" name="answer" class="surveybutton" value="7">7</button>
+	  <button type="button" class="surveybutton" onclick="clickHandle(1)" disabled="true">1</button>
+	  <button type="button" class="surveybutton" onclick="clickHandle(2)" disabled="true">2</button>
+	  <button type="button" class="surveybutton" onclick="clickHandle(3)" disabled="true">3</button>
+	  <button type="button" class="surveybutton" onclick="clickHandle(4)" disabled="true">4</button>
+	  <button type="button" class="surveybutton" onclick="clickHandle(5)" disabled="true">5</button>
+          <button type="button" class="surveybutton" onclick="clickHandle(6)" disabled="true">6</button>
+	  <button type="button" class="surveybutton" onclick="clickHandle(7)" disabled="true">7</button>
 	  </form>
       </div>
       <div id="anchors">
