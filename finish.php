@@ -2,14 +2,14 @@
 <html>
 <head>
 <link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
-<title>ATTRIBUTE Study</title>
+<title>Emotional Eye Study</title>
 </head>
 
 <body>
 <div id="Content">	
 <h3>STOP</h3>
 
-<p>Congratulations!  You have successfully completed the ATTRIBUTE Study.</p>
+<p>Congratulations!  You have successfully completed the Emotional Eye Study.</p>
 
 <p>Thank you for your participation.</p>
 

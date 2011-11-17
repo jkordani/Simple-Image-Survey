@@ -15,11 +15,11 @@ else{
 <body>
 <div id="Content">
 <h3> Attribute Study!</h3>
-<p>Your task is to FILL IN THE BLANK . There are no right or wrong answers in the study. The entire survey will take about 20 minutes.</p>
+<p>Your task is to estimate how old people appear. There are no right or wrong answers in the study. The entire survey will take about 20 minutes.</p>
 
 <p>During the study, you will be viewing images of people on this computer screen. Each image will be visible for about 5 seconds, then another image will automatically appear.</p>
 
-<p>You will rate the ATTRIBUTE of each image by using the following rating scale that will appear on the screen beneath each image.</p>
+<p>You will rate the age of each image by using the following rating scale that will appear on the screen beneath each image.</p>
 
 <p>You will use the mouse to enter your rating by clicking on the number that corresponds to the rating of your choice.</p>
 
@@ -32,8 +32,8 @@ else{
  <button name="answer" class="surveybutton" value="6">6</button>
  <button name="answer" class="surveybutton" value="7">7</button>
  <div id="anchors">
-  <div id="anchor_left">NOT AT ALL<br />ATTRIBUTE</div>
-   <div id="anchor_right">VERY <br />ATTRIBUTE</div>
+  <div id="anchor_left">NOT OLD<br />AT ALL</div>
+   <div id="anchor_right">VERY<br />OLD</div>
  </div>
 </div>
 <div id="lower">

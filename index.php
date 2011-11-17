@@ -5,18 +5,18 @@ $_SESSION['state']='training_start';
 <html>
 <head>
 <link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
-<title>Survey Start Page</title>
+<title>Emotional Eye Start Page</title>
 </head>
 <body>
 <div id="Content">
 <div id="banner">
-A Banner
+Emotional Eye Study
 </div>
 <div id="instructions">
-Fill out the form below
+Please fill out the form below
 </div>
 <div id="login">
-<p> A form will be here. </p>
+<p>Please enter your age and gender.</p>
 <form id="new-user" action="instructions.php" method="post">
  <label for="age">Age:</label>
  <input type="text" id="age" name="age" maxlength="2"/>

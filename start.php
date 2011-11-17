@@ -148,8 +148,8 @@ window.onload = function() {
 	  </form>
       </div>
       <div id="anchors">
-           <div id="anchor_left">NOT AT ALL<br />ATTRIBUTE</div>
-	   <div id="anchor_right">VERY<br />ATTRIBUTE</div>
+           <div id="anchor_left">NOT OLD<br />AT ALL</div>
+	   <div id="anchor_right">VERY<br />OLD</div>
 	   <a id="quit" href="index.php">QUIT</a>
       </div>
       </div>
