@@ -1,0 +1,5 @@
+use this to remove those duplicate values
+
+DELETE FROM `results` WHERE id IN (3201,21831,4446,4254,18860,23282,19883,22085,3365,12591,12594)
+
+Don't forget to check your ages.
