@@ -99,16 +99,16 @@ session_start();
 <link rel="stylesheet" href="css/survey.css" type="text/css" media="screen">
 <script type="text/javascript">
 function clickHandle(buttonNum){
-    disableButtons(true);
+    enableButtons(false);
     document.forms['survey'].answer.value = buttonNum;
     document.forms['survey'].submit();
 }
 
-function disableButtons(truefalse) {
+function enableButtons(truefalse) {
     //var number = document.forms['survey'].answer;
     var buttons = document.getElementsByClassName('surveybutton');
     for(var i=0; i<buttons.length; i++){
-	buttons[i].disabled = truefalse;
+	buttons[i].disabled = !truefalse;
     }
 }
 
